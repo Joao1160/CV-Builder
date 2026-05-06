@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <style>
+    * { margin: 0; padding: 0; }
+
+    @page {
+      size: A4;
+      margin: 28pt 36pt 28pt 36pt;
+    }
+
+    body {
+      font-family: 'Arial', 'Helvetica', sans-serif;
+      font-size: 9.5pt;
+      color: #000000;
+      background: #ffffff;
+    }
+
+    .name {
+      font-size: 26pt;
+      font-weight: bold;
+      color: #000000;
+      margin-bottom: 3pt;
+    }
+
+    .job-title {
+      font-size: 11pt;
+      color: #333333;
+      margin-bottom: 8pt;
+      font-weight: bold;
+    }
+
+    .contact-bar {
+      font-size: 8pt;
+      color: #000000;
+      border-top: 2pt solid #000000;
+      border-bottom: 1pt solid #000000;
+      padding: 5pt 0;
+      margin-bottom: 18pt;
+      word-break: break-all;
+      line-height: 1.6;
+    }
+
+    .contact-bar span {
+      margin-right: 14pt;
+    }
+
+    .section { margin-bottom: 16pt; }
+
+    .section-title {
+      font-size: 8.5pt;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 1.5pt;
+      color: #000000;
+      border-bottom: 1.5pt solid #000000;
+      padding-bottom: 4pt;
+      margin-bottom: 9pt;
+    }
+
+    .summary {
+      font-size: 9pt;
+      color: #111111;
+      line-height: 1.6;
+      padding: 8pt 10pt;
+      border-left: 3pt solid #000000;
+    }
+
+    .item-table {
+      width: 100%;
+      margin-bottom: 10pt;
+      border-collapse: collapse;
+    }
+
+    .item-table td { vertical-align: top; }
+
+    .col-left  { width: 72%; }
+
+    .col-right {
+      width: 28%;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .item-title {
+      font-size: 10pt;
+      font-weight: bold;
+      color: #000000;
+    }
+
+    .item-sub {
+      font-size: 9pt;
+      color: #333333;
+      font-weight: bold;
+      margin-top: 2pt;
+    }
+
+    .item-date {
+      font-size: 8.5pt;
+      color: #444444;
+      white-space: nowrap;
+    }
+
+    .item-grade {
+      font-size: 8pt;
+      color: #444444;
+      margin-top: 2pt;
+    }
+
+    .item-desc {
+      font-size: 9pt;
+      color: #111111;
+      line-height: 1.55;
+      margin-top: 5pt;
+    }
+
+    .proj-table {
+      width: 100%;
+      margin-bottom: 4pt;
+      border-collapse: collapse;
+    }
+
+    .proj-table td { vertical-align: top; }
+
+    .proj-name {
+      font-size: 10pt;
+      font-weight: bold;
+      color: #000000;
+    }
+
+    .proj-url {
+      font-size: 8pt;
+      color: #333333;
+      text-align: right;
+      word-break: break-all;
+    }
+
+    .proj-desc {
+      font-size: 9pt;
+      color: #111111;
+      line-height: 1.52;
+      margin: 4pt 0;
+    }
+
+    .proj-tech {
+      font-size: 8pt;
+      color: #000000;
+      font-weight: bold;
+      border: 0.5pt solid #000000;
+      padding: 1pt 5pt;
+      margin-right: 4pt;
+    }
+
+    .skills-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .skills-table td { vertical-align: top; width: 50%; }
+
+    .skill-group-label {
+      font-size: 8.5pt;
+      font-weight: bold;
+      color: #000000;
+      margin-bottom: 5pt;
+    }
+
+    .skill-text {
+      font-size: 9pt;
+      color: #111111;
+      line-height: 1.8;
+    }
+
+    .cert-table {
+      width: 100%;
+      margin-bottom: 7pt;
+      border-collapse: collapse;
+    }
+
+    .cert-table td { vertical-align: top; }
+
+    .cert-name {
+      font-size: 10pt;
+      font-weight: bold;
+      color: #000000;
+    }
+
+    .cert-issuer {
+      font-size: 8.5pt;
+      color: #444444;
+      margin-top: 2pt;
+    }
+
+    .cert-date {
+      font-size: 8.5pt;
+      color: #444444;
+      text-align: right;
+    }
+
+    .cert-divider {
+      border: none;
+      border-top: 0.5pt solid #bbbbbb;
+      margin-bottom: 7pt;
+    }
+
+    .lang-name {
+      font-size: 10pt;
+      font-weight: bold;
+      color: #000000;
+    }
+
+    .lang-level {
+      font-size: 8.5pt;
+      color: #444444;
+    }
+
+    .ach-item {
+      font-size: 9pt;
+      color: #111111;
+      line-height: 1.6;
+      margin-bottom: 5pt;
+      padding-left: 12pt;
+    }
+  </style>
+</head>
+<body>
+
+<div class="name"      th:text="${cv.fullName}">Full Name</div>
+<div class="job-title" th:if="${cv.jobTitle}" th:text="${cv.jobTitle}"></div>
+
+<div class="contact-bar">
+  <span th:if="${cv.email}"    th:text="${cv.email}">email@example.com</span>
+  <span th:if="${cv.phone}"    th:text="${cv.phone}">+123456789</span>
+  <span th:if="${cv.location}" th:text="${cv.location}">City, Country</span>
+  <span th:if="${cv.linkedIn}" th:text="${cv.linkedIn}">linkedin.com/in/username</span>
+  <span th:if="${cv.website}"  th:text="${cv.website}">portfolio.com</span>
+</div>
+
+<div class="section" th:if="${cv.summary}">
+  <div class="section-title">Professional Summary</div>
+  <p class="summary" th:text="${cv.summary}"></p>
+</div>
+
+<div class="section" th:if="${cv.experiences != null and !cv.experiences.isEmpty()}">
+  <div class="section-title">Work Experience</div>
+  <table class="item-table" th:each="exp : ${cv.experiences}">
+    <tr>
+      <td class="col-left">
+        <div class="item-title" th:text="${exp.position}">Position</div>
+        <div class="item-sub"   th:text="${exp.company}">Company Name</div>
+        <div class="item-desc"  th:if="${exp.description}" th:text="${exp.description}"></div>
+      </td>
+      <td class="col-right">
+        <div class="item-date">
+          <div th:text="${exp.startDate}">YYYY-MM</div>
+          <div th:text="${exp.current} ? 'Present' : ${exp.endDate}">YYYY-MM</div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div class="section" th:if="${cv.educations != null and !cv.educations.isEmpty()}">
+  <div class="section-title">Education</div>
+  <table class="item-table" th:each="edu : ${cv.educations}">
+    <tr>
+      <td class="col-left">
+        <div class="item-title">
+          <span th:text="${edu.degree}">Degree</span>
+          <span th:if="${edu.field}">, <span th:text="${edu.field}">Field</span></span>
+        </div>
+        <div class="item-sub"   th:text="${edu.institution}">University</div>
+        <div class="item-grade" th:if="${edu.grade}">GPA: <span th:text="${edu.grade}">3.5</span></div>
+      </td>
+      <td class="col-right">
+        <div class="item-date">
+          <div th:text="${edu.startDate}">YYYY</div>
+          <div th:text="${edu.endDate}">YYYY</div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div class="section" th:if="${cv.projects != null and !cv.projects.isEmpty()}">
+  <div class="section-title">Projects</div>
+  <div th:each="proj : ${cv.projects}" style="margin-bottom:11pt;">
+    <table class="proj-table">
+      <tr>
+        <td style="width:68%;">
+          <div class="proj-name" th:text="${proj.name}">Project Name</div>
+        </td>
+        <td style="width:32%;">
+          <div class="proj-url" th:if="${proj.url}" th:text="${proj.url}">https://project.com</div>
+        </td>
+      </tr>
+    </table>
+    <div class="proj-desc" th:if="${proj.description}" th:text="${proj.description}"></div>
+    <div th:if="${proj.techs != null and !proj.techs.isEmpty()}">
+      <span class="proj-tech" th:each="t : ${proj.techs}" th:text="${t}">Tech</span>
+    </div>
+  </div>
+</div>
+
+<div class="section"
+     th:if="${(cv.technicalSkills != null and !cv.technicalSkills.isEmpty())
+           or (cv.softSkills      != null and !cv.softSkills.isEmpty())}">
+  <div class="section-title">Skills</div>
+  <table class="skills-table">
+    <tr>
+      <td th:if="${cv.technicalSkills != null and !cv.technicalSkills.isEmpty()}">
+        <div class="skill-group-label">Technical</div>
+        <div class="skill-text"
+             th:text="${#strings.listJoin(cv.technicalSkills, '  ·  ')}">
+          JavaScript · React
+        </div>
+      </td>
+      <td th:if="${cv.softSkills != null and !cv.softSkills.isEmpty()}">
+        <div class="skill-group-label">Soft Skills</div>
+        <div class="skill-text"
+             th:text="${#strings.listJoin(cv.softSkills, '  ·  ')}">
+          Communication · Leadership
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div class="section" th:if="${cv.certifications != null and !cv.certifications.isEmpty()}">
+  <div class="section-title">Certifications</div>
+  <div th:each="cert : ${cv.certifications}">
+    <table class="cert-table">
+      <tr>
+        <td style="width:68%;">
+          <div class="cert-name"   th:text="${cert.name}">Certification</div>
+          <div class="cert-issuer" th:text="${cert.issuer}">Issuing Org</div>
+        </td>
+        <td style="width:32%;">
+          <div class="cert-date" th:text="${cert.date}">YYYY-MM</div>
+        </td>
+      </tr>
+    </table>
+    <hr class="cert-divider"/>
+  </div>
+</div>
+
+<div class="section" th:if="${cv.languages != null and !cv.languages.isEmpty()}">
+  <div class="section-title">Languages</div>
+  <table style="border-collapse:collapse;">
+    <tr>
+      <td th:each="lang : ${cv.languages}" style="padding-right:24pt; vertical-align:top;">
+        <span class="lang-name"  th:text="${lang.name}">English</span>
+        <span class="lang-level" th:if="${lang.level}">
+          · <span th:text="${lang.level}">Fluent</span>
+        </span>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div class="section" th:if="${cv.achievements != null and !cv.achievements.isEmpty()}">
+  <div class="section-title">Achievements</div>
+  <div class="ach-item" th:each="ach : ${cv.achievements}">
+    &#9657; <span th:text="${ach}">Achievement</span>
+  </div>
+</div>
+
+</body>
+</html>
